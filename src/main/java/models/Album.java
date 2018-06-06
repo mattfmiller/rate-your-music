@@ -2,19 +2,22 @@ package models;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Album {
     private String name;
     private YearMonth releaseDate;
-    private ArrayList<String> tracks = new ArrayList<>();
+    private List<String> tracks;
     private String imageUrl;
     private int id;
     private int artistId;
 
-    public Album(String name, String releaseDate, String imageUrl, int artistId ) {
+    public Album(String name, String releaseDate,String tracks, String imageUrl, int artistId ) {
         this.name = name;
         this.releaseDate = YearMonth.parse(releaseDate);
+        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(",")));
         this.imageUrl = imageUrl;
         this.artistId = artistId;
     }
@@ -35,8 +38,12 @@ public class Album {
         this.releaseDate = YearMonth.parse(releaseDate);
     }
 
-    public ArrayList<String> getTracks() {
+    public List<String> getTracks() {
         return tracks;
+    }
+
+    public void setTracks(String tracks) {
+        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(",")));
     }
 
     public void addTrack(String track) {

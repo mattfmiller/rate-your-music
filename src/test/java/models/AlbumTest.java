@@ -16,7 +16,7 @@ public class AlbumTest {
     }
 
     public Album setUpNewAlbum() {
-        return new Album("Voices In The Dark", "2018-06", "testUrl", 1);
+        return new Album("Voices In The Dark", "2018-06", "Hey Little Girl, Beach", "testUrl",1);
     }
 
     @After
@@ -61,7 +61,14 @@ public class AlbumTest {
     @Test
     public void getTracks() {
         Album testAlbum = setUpNewAlbum();
-        assertEquals(0, testAlbum.getTracks().size());
+        assertEquals(2, testAlbum.getTracks().size());
+    }
+
+    @Test
+    public void setTracks() {
+        Album testAlbum = setUpNewAlbum();
+        testAlbum.setTracks("Ghost, Rifle, Freak Out");
+        assertEquals(3, testAlbum.getTracks().size());
     }
 
     @Test
@@ -69,7 +76,7 @@ public class AlbumTest {
         Album testAlbum = setUpNewAlbum();
         testAlbum.addTrack("Hey Little Girl");
         testAlbum.addTrack("Beach");
-        assertEquals(2, testAlbum.getTracks().size());
+        assertEquals(4, testAlbum.getTracks().size());
     }
 
     @Test
@@ -97,4 +104,5 @@ public class AlbumTest {
         testAlbum.setArtistId(2);
         assertEquals(2, testAlbum.getArtistId());
     }
+
 }
