@@ -4,7 +4,7 @@
 
     {{#if albums}}
         {{#each albums }}
-            <p><a href="/artists/{{artistId}}/albums/{{id}}">{{name}}</a></p>
+            <p><a href="/artists/{{artistId}}/albums/{{id}}"><img src="{{imageUrl}}" width="75px"> {{name}}</a></p>
         {{/each}}
     {{else}}
         <p>No Albums!</p>

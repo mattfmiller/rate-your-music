@@ -1,0 +1,19 @@
+{{#partial "content"}}
+
+    <img src="{{album.imageUrl}}" width="50%">
+    <h3>{{artist.name}}-{{ album.name }}</h3>
+    <p>Released: {{album.releaseDate}}</p>
+    <ol>
+        {{#each tracks}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ol>
+    <br>
+    <p>
+        <a href="/albums/{{album.id}}/edit">Edit this album</a><br>
+        <a href="/artists/{{album.categoryId}}/albums/{{album.id}}/delete">DELETE this album</a>
+    </p>
+
+{{/partial}}
+
+{{> layout.hbs}}

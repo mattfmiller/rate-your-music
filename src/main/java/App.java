@@ -9,10 +9,7 @@ import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static spark.Spark.*;
 
@@ -110,6 +107,31 @@ public class App {
             albumDao.add(newAlbum);
             res.redirect("/");
             return null;
+        }, new HandlebarsTemplateEngine());
+
+        //get: show an individual album that is nested in an artist
+        get("/artists/:artist_id/albums/:album_id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfAlbumToFind = Integer.parseInt(req.params("album_id"));
+            Album foundAlbum = albumDao.findById(idOfAlbumToFind);
+            int idOfArtistToFind = Integer.parseInt(req.params("artist_id"));
+            Artist foundArtist = artistDao.findById(idOfArtistToFind);
+            model.put("album", foundAlbum);
+            model.put("artist", foundArtist);
+            List<String> tracks = new ArrayList<>(Arrays.asList(foundAlbum.getTracks().split("; ")));
+            model.put("tracks", tracks);
+            return new ModelAndView(model, "album-details.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //get: show a form to update an album
+        get("/albums/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("artists", allArtists);
+            Album album = albumDao.findById(Integer.parseInt(req.params("id")));
+            model.put("album", album);
+            model.put("editalbum", true);
+            return new ModelAndView(model, "album-form.hbs");
         }, new HandlebarsTemplateEngine());
     }
 }
