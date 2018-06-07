@@ -17,6 +17,21 @@ public class Sql2oAlbumDao  implements AlbumDao {
     }
 
     @Override
+    public void add(Album album) {
+        String sql = "INSERT INTO albums (name, releaseDate, tracks, imageUrl, artistId) VALUES (:name, :releaseDate, :tracks, :imageUrl, :artistId)";
+        try(Connection con = sql2o.open()){
+            int id = (int) con.createQuery(sql, true)
+                    .bind(album)
+                    .executeUpdate()
+                    .getKey();
+            album.setId(id);
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    @Override
     public List<Album> getAll() {
         try(Connection con = sql2o.open()){
             return con.createQuery("SELECT * FROM albums")
@@ -31,21 +46,6 @@ public class Sql2oAlbumDao  implements AlbumDao {
                     .addParameter("albumId", albumId)
                     .executeAndFetch(Review.class);
         }
-    }
-
-    @Override
-    public void add(Album album) {
-        String sql = "INSERT INTO albums (name, releaseDate, tracks, imageUrl, artistId) VALUES (:name, :releaseDate, :tracks, :imageUrl, :artistId)";
-        try(Connection con = sql2o.open()){
-            int id = (int) con.createQuery(sql, true)
-                    .bind(album)
-                    .executeUpdate()
-                    .getKey();
-            album.setId(id);
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
-        }
-
     }
 
     @Override

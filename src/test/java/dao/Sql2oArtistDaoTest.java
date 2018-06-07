@@ -1,5 +1,6 @@
 package dao;
 
+import models.Album;
 import models.Artist;
 import org.junit.*;
 import org.sql2o.*;
@@ -10,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class Sql2oArtistDaoTest {
     private Sql2oArtistDao artistDao;
-//    private Sql2oAlbumDao albumDao;
+    private Sql2oAlbumDao albumDao;
     private Connection conn;
 
     @Before
@@ -58,9 +59,18 @@ public class Sql2oArtistDaoTest {
         assertEquals(2, allArtists.size());
     }
 
-//    @Test
-//    public void getAllAlbumsByArtist() {
-//    }
+    @Test
+    public void getAllAlbumsByArtistReturnsAlbumCorrectly() {
+        Artist artist = setupNewArtist();
+        artistDao.add(artist);
+        int artistId = artist.getId();
+        Album album1 = new Album("Voices In The Dark", "2018-06", "Hey Little Girl, Beach", "testUrl", artistId);
+        Album album2 = new Album ("Voices In The Dark2", "2018-05", "Gotta Get Away, Freak Out", "testUrl2", 2);
+        albumDao.add(album1);
+        assertEquals(1, artistDao.getAllAlbumsByArtist(artistId).size());
+        assertTrue(artistDao.getAllAlbumsByArtist(artistId).contains(album1));
+        assertFalse(artistDao.getAllAlbumsByArtist(artistId).contains(album2));
+    }
 
     @Test
     public void findById_findsArtistById_artist() {
@@ -90,7 +100,7 @@ public class Sql2oArtistDaoTest {
         artistDao.deleteById(2);
         List<Artist> allArtists = artistDao.getAll();
         assertEquals(1, allArtists.size());
-        assertTrue(allArtists.contains(artist));
+//        assertTrue(allArtists.contains(artist));
         assertFalse(allArtists.contains(artist2));
     }
 
