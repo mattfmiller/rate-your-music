@@ -37,7 +37,7 @@
                 <label for="tracks">Album tracks (separate with semicolon)</label>
                 <input id="tracks" name="tracks" type="text" placeholder="Ex. Hound Dog; All Shook Up; etc...">
                 <br>
-                <label for="imageUrl">Album tracks (separate with semicolon)</label>
+                <label for="imageUrl">Album Image</label>
                 <input id="imageUrl" name="imageUrl" type="text" placeholder="http://www.imagehost.com/imasgeId.jpg">
                 <br>
                 <label for="artistId">Album Artist:</label>
@@ -46,7 +46,7 @@
                         <option value="{{id}}">{{name}}</option>
                     {{/each}}
                 </select>
-                <p>Don't see the right artist?<<a href="/artists/new">Add 'em.</a></p>
+                <p>Don't see the right artist?<a href="/artists/new"> Add 'em.</a></p>
             {{else}}
                 <h3> You'll need to add an artist before you add an album. <a href="/artists/new">Add one here.</a> </h3>
             {{/if}}

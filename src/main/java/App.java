@@ -124,6 +124,8 @@ public class App {
             model.put("tracks", tracks);
             List<Review> reviews = albumDao.getAllReviewsByAlbum(idOfAlbumToFind);
             model.put("reviews", Lists.reverse(reviews));
+
+
             return new ModelAndView(model, "album-details.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -153,7 +155,6 @@ public class App {
             res.redirect("/");
             return null;
         }, new HandlebarsTemplateEngine());
-
 
         //post: process new review form
         post("/artists/:artist_id/albums/:album_id", (req, res) -> {
