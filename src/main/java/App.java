@@ -124,8 +124,6 @@ public class App {
             model.put("tracks", tracks);
             List<Review> reviews = albumDao.getAllReviewsByAlbum(idOfAlbumToFind);
             model.put("reviews", Lists.reverse(reviews));
-
-
             return new ModelAndView(model, "album-details.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -140,7 +138,7 @@ public class App {
             return new ModelAndView(model, "album-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //post: process a form to update a task
+        //post: process a form to update an album
         post("/albums/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Artist> allArtists = artistDao.getAll();
@@ -169,6 +167,32 @@ public class App {
             Review newReview = new Review(rating, author, comment, idOfAlbumToFind);
             reviewDao.add(newReview);
             res.redirect("/artists/" + idOfArtistToFind +"/albums/" + idOfAlbumToFind);
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        //get: show a form to update a review
+        get("/reviews/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("artists", allArtists);
+            Review review = reviewDao.findById(Integer.parseInt(req.params("id")));
+            model.put("review", review);
+            return new ModelAndView(model, "review-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //post: process a form to update a review
+        post("/reviews/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("artists", allArtists);
+            int reviewToEditId = Integer.parseInt(req.params("id"));
+            int newReviewRating = Integer.parseInt(req.queryParams("newReviewRating"));
+            String newReviewAuthor = req.queryParams("newReviewAuthor");
+            String newReviewComment = req.queryParams("newReviewComment");
+            Review reviewToEdit = reviewDao.findById(reviewToEditId);
+            int newReviewAlbumId = reviewToEdit.getAlbumId();
+            reviewDao.update(reviewToEditId, newReviewRating, newReviewAuthor, newReviewComment, newReviewAlbumId);
+            res.redirect("/");
             return null;
         }, new HandlebarsTemplateEngine());
     }

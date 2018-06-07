@@ -1,47 +1,18 @@
 {{#partial "content"}}
-    {{#if editAlbum}}
-        <h1>Edit Details for {{album.name}}</h1>
-        <form action="/albums/{{album.id}}" method="post">
-            <br>
-            <label for="name">Album Name</label>
-            <input id="newAlbumName" name="newAlbumName" type="text" value="{{album.name}}">
-            <br>
-            <label for="releaseDate">Album Release Date</label>
-            <input id="newAlbumReleaseDate" name="newAlbumReleaseDate" type="text" value="{{album.releaseDate}}">
-            <br>
-            <label for="tracks">Album Release Date</label>
-            <input id="newAlbumTracks" name="newAlbumTracks" type="text" value="{{album.tracks}}">
-            <br>
-            <label for="imageUrl">Album Release Date</label>
-            <input id="newAlbumImageUrl" name="newAlbumImageUrl" type="text" value="{{album.imageUrl}}">
-            <br>
-            <label for="artistId">Update Artist:</label>
-            <select id="newAlbumArtistId" name="newAlbumArtistId">
-                {{#each artists}}
-                    <option value="{{id}}">{{name}}</option>
-                {{/each}}
-            </select>
-            <p>Don't see the right artist?<a href="/artists/new">Add 'em.</a></p>
-            <button type="submit" class="btn btn-default">Save Changes</button>
-        </form>
-    {{else}}
-        <h2>Add a new Review</h2>
-        <form action="albums/{{albumId}}/reviews" method="post">
-            <label for="name">Album Name</label>
-            <input id="name" name="name" type="text">
-            <br>
-            <label for="releaseDate">Album Release Date</label>
-            <input id="releaseDate" name="releaseDate" type="text">
-            <br>
-            <label for="tracks">Album tracks (separate with semicolon)</label>
-            <input id="tracks" name="tracks" type="text" placeholder="Ex. Hound Dog; All Shook Up; etc...">
-            <br>
-            <label for="imageUrl">Album tracks (separate with semicolon)</label>
-            <input id="imageUrl" name="imageUrl" type="text" placeholder="http://www.imagehost.com/imasgeId.jpg">
-            <br>
-            <button type="submit" class="btn btn-default">Add Review</button>
-        </form>
-    {{/if}}
+    <h1>Edit Details for review</h1>
+    <form action="/reviews/{{review.id}}" method="post">
+        <br>
+        <label for="rating">Rating</label>
+        <input id="newReviewRating" name="newReviewRating" type="number" value="{{review.rating}}">
+        <br>
+        <label for="author">Author</label>
+        <input id="newReviewAuthor" name="newReviewAuthor" type="text" value="{{review.author}}">
+        <br>
+        <label for="comment">Album Release Date</label>
+        <input id="newReviewComment" name="newReviewComment" type="text" value="{{review.comment}}">
+        <br>
+        <button type="submit" class="btn btn-default">Save Changes</button>
+    </form>
 {{/partial}}
 
 {{> layout.hbs}}

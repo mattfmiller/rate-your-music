@@ -25,18 +25,14 @@
     <h4>Reviews:</h4>
     {{#if reviews}}
         {{#each reviews}}
-            <h5>
-                {{author}}-{{rating}} Stars
-                <!--{{#each ratings}}-->
-                    <!--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>-->
-                <!--{{/each}}-->
-            </h5>
+            <h5>{{author}}-{{rating}} Stars</h5>
             <p>{{comment}}</p>
+            <p><a href="/reviews/{{id}}/edit">Edit Review</a></p>
         {{/each}}
     {{/if}}
     <p>
-        <a href="/albums/{{album.id}}/edit">Edit this album</a><br>
-        <a href="/artists/{{album.categoryId}}/albums/{{album.id}}/delete">DELETE this album</a>
+        <a href="/albums/{{album.id}}/edit">Edit Album</a><br>
+        <a href="/artists/{{album.categoryId}}/albums/{{album.id}}/delete">DELETE Album</a>
     </p>
 
 {{/partial}}
