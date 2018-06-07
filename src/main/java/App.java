@@ -130,8 +130,24 @@ public class App {
             model.put("artists", allArtists);
             Album album = albumDao.findById(Integer.parseInt(req.params("id")));
             model.put("album", album);
-            model.put("editalbum", true);
+            model.put("editAlbum", true);
             return new ModelAndView(model, "album-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //post: process a form to update a task
+        post("/albums/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("artists", allArtists);
+            int albumToEditId = Integer.parseInt(req.params("id"));
+            String newAlbumName = req.queryParams("newAlbumName");
+            String newAlbumReleaseDate = req.queryParams("newAlbumReleaseDate");
+            String newAlbumTracks = req.queryParams("newAlbumTracks");
+            String newAlbumImageUrl = req.queryParams("newAlbumImageUrl");
+            int newAlbumArtistId = Integer.parseInt(req.queryParams("newAlbumArtistId"));
+            albumDao.update(albumToEditId, newAlbumName, newAlbumReleaseDate, newAlbumTracks, newAlbumImageUrl, newAlbumArtistId);
+            res.redirect("/");
+            return null;
         }, new HandlebarsTemplateEngine());
     }
 }
