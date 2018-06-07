@@ -8,16 +8,16 @@ import java.util.Objects;
 
 public class Album {
     private String name;
-    private YearMonth releaseDate;
+    private String releaseDate;
     private List<String> tracks;
     private String imageUrl;
     private int id;
     private int artistId;
 
-    public Album(String name, String releaseDate,String tracks, String imageUrl, int artistId ) {
+    public Album(String name, String releaseDate, String tracks, String imageUrl, int artistId) {
         this.name = name;
-        this.releaseDate = YearMonth.parse(releaseDate);
-        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(",")));
+        this.releaseDate = releaseDate;
+        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(", ")));
         this.imageUrl = imageUrl;
         this.artistId = artistId;
     }
@@ -30,12 +30,12 @@ public class Album {
         this.name = name;
     }
 
-    public YearMonth getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
     public void setReleaseDate(String releaseDate) {
-        this.releaseDate = YearMonth.parse(releaseDate);
+        this.releaseDate = releaseDate;
     }
 
     public List<String> getTracks() {
@@ -43,7 +43,7 @@ public class Album {
     }
 
     public void setTracks(String tracks) {
-        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(",")));
+        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(", ")));
     }
 
     public void addTrack(String track) {

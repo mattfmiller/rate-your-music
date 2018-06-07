@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS artists (
 CREATE TABLE IF NOT EXISTS albums (
   id int PRIMARY KEY auto_increment,
   name VARCHAR,
-  releaseDate TIMESTAMP,
+  releaseDate VARCHAR,
   tracks VARCHAR,
   imageUrl VARCHAR,
   artistId int

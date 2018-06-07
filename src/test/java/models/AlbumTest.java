@@ -46,7 +46,7 @@ public class AlbumTest {
     @Test
     public void getReleaseDate() {
         Album testAlbum = setUpNewAlbum();
-        YearMonth expected = YearMonth.parse("2018-06");
+        String expected = "2018-06";
         assertEquals(expected, testAlbum.getReleaseDate());
     }
 
@@ -54,7 +54,7 @@ public class AlbumTest {
     public void setReleaseDate() {
         Album testAlbum = setUpNewAlbum();
         testAlbum.setReleaseDate("2018-05");
-        YearMonth expected = YearMonth.parse("2018-05");
+        String expected = "2018-05";
         assertEquals(expected, testAlbum.getReleaseDate());
     }
 
@@ -62,6 +62,7 @@ public class AlbumTest {
     public void getTracks() {
         Album testAlbum = setUpNewAlbum();
         assertEquals(2, testAlbum.getTracks().size());
+        assertEquals(true, testAlbum.getTracks().contains("Beach"));
     }
 
     @Test

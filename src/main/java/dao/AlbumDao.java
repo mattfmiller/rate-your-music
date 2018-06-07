@@ -8,7 +8,7 @@ import java.util.List;
 public interface AlbumDao {
     // LIST
     List<Album> getAll();
-    List<Review> getAllReviewssByAlbum(int albumId);
+    List<Review> getAllReviewsByAlbum(int albumId);
 
     // CREATE
     void add(Album album);

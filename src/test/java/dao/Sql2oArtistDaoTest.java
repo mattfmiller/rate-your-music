@@ -2,7 +2,6 @@ package dao;
 
 import models.Artist;
 import org.junit.*;
-import org.sql2o.Connection;
 import org.sql2o.*;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class Sql2oArtistDaoTest {
     }
 
     @Test
-    public void add_addingArtistsSetsId() {
+    public void add_addingArtistSetsId() {
         Artist artist = setupNewArtist();
         int originalArtistId = artist.getId();
         Artist artist2 = new Artist ("Elvis", "testUrl2");
