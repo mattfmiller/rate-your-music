@@ -1,10 +1,12 @@
 
 
+import com.google.common.collect.Lists;
 import dao.Sql2oAlbumDao;
 import dao.Sql2oArtistDao;
 import dao.Sql2oReviewDao;
 import models.Album;
 import models.Artist;
+import models.Review;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -120,6 +122,8 @@ public class App {
             model.put("artist", foundArtist);
             List<String> tracks = new ArrayList<>(Arrays.asList(foundAlbum.getTracks().split("; ")));
             model.put("tracks", tracks);
+            List<Review> reviews = albumDao.getAllReviewsByAlbum(idOfAlbumToFind);
+            model.put("reviews", Lists.reverse(reviews));
             return new ModelAndView(model, "album-details.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -144,9 +148,26 @@ public class App {
             String newAlbumReleaseDate = req.queryParams("newAlbumReleaseDate");
             String newAlbumTracks = req.queryParams("newAlbumTracks");
             String newAlbumImageUrl = req.queryParams("newAlbumImageUrl");
-            int newAlbumArtistId = Integer.parseInt(req.queryParams("newAlbumArtistId"));
+            int newAlbumArtistId = Integer.parseInt(req.params("newAlbumArtistId"));
             albumDao.update(albumToEditId, newAlbumName, newAlbumReleaseDate, newAlbumTracks, newAlbumImageUrl, newAlbumArtistId);
             res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+
+        //post: process new review form
+        post("/artists/:artist_id/albums/:album_id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfAlbumToFind = Integer.parseInt(req.params("album_id"));
+            int idOfArtistToFind = Integer.parseInt(req.params("artist_id"));
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("allArtists", allArtists);
+            int rating = Integer.parseInt(req.queryParams("rating"));
+            String author = req.queryParams("author");
+            String comment = req.queryParams("comment");
+            Review newReview = new Review(rating, author, comment, idOfAlbumToFind);
+            reviewDao.add(newReview);
+            res.redirect("/artists/" + idOfArtistToFind +"/albums/" + idOfAlbumToFind);
             return null;
         }, new HandlebarsTemplateEngine());
     }

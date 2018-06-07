@@ -9,6 +9,31 @@
         {{/each}}
     </ol>
     <br>
+    <form action="/artists/{{album.artistId}}/albums/{{album.id}}" method="post">
+        <label for="rating">Rating out of 5 Stars</label>
+        <input id="rating" name="rating" type="number">
+        <br>
+        <label for="author">Your Name</label>
+        <input id="author" name="author" type="text">
+        <br>
+        <label for="comment">Review</label>
+        <input id="comment" name="comment" type="text">
+        <br>
+        <button type="submit" class="btn btn-default">Add Review</button>
+    </form>
+    <br>
+    <h4>Reviews:</h4>
+    {{#if reviews}}
+        {{#each reviews}}
+            <h5>
+                {{author}}-{{rating}}
+                <!--{{#each ratings}}-->
+                    <!--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>-->
+                <!--{{/each}}-->
+            </h5>
+            <p>{{comment}}</p>
+        {{/each}}
+    {{/if}}
     <p>
         <a href="/albums/{{album.id}}/edit">Edit this album</a><br>
         <a href="/artists/{{album.categoryId}}/albums/{{album.id}}/delete">DELETE this album</a>
