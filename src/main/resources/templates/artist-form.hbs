@@ -1,0 +1,23 @@
+{{#partial "content"}}
+    {{#if editArtist}}
+        <h1>Edit details for {{artist.name}}</h1>
+        <form action="/artists/{{artist.id}}" method="post">
+            <label for="name">Edit this Artist's name</label>
+            <input id="newArtistName" name="newArtistName" type="text" value="{{artist.name}}">
+            <label for="imageUrl">Edit this Artist's image</label>
+            <input id="newArtistImageUrl" name="newArtistImageUrl" type="text" value="{{artist.imageUrl}}">
+            <button type="submit" class="btn btn-default">Save Changes</button>
+        </form>
+    {{else}}
+        <h1>Add a new Artist</h1>
+        <form action="/artists" method="post">
+            <label for="name">Artist</label>
+            <input id="name" name="name" type="text">
+            <label for="imageUrl">Image URL</label>
+            <input id="imageUrl" name="imageUrl" type="text">
+            <button type="submit" class="btn btn-default">Add Artist</button>
+        </form>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

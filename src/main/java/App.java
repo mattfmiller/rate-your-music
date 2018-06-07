@@ -43,5 +43,73 @@ public class App {
             model.put("artists", artists);
             return new ModelAndView(model, "artist-form.hbs");
         }, new HandlebarsTemplateEngine());
+
+        //post: process new artist form
+        post("/artists", (req, res) -> { //new
+            Map<String, Object> model = new HashMap<>();
+            String name = req.queryParams("name");
+            String imageUrl = req.queryParams("imageUrl");
+            Artist newArtist = new Artist(name, imageUrl);
+            artistDao.add(newArtist);
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        //get: show an individual artist and their albums
+        get("/artists/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfArtistToFind = Integer.parseInt(req.params("id"));
+            Artist foundArtist = artistDao.findById(idOfArtistToFind);
+            model.put("artist", foundArtist);
+            List<Album> allAlbumsByArtist = artistDao.getAllAlbumsByArtist(idOfArtistToFind);
+            model.put("albums", allAlbumsByArtist);
+            model.put("artists", artistDao.getAll());
+            return new ModelAndView(model, "artist-details.hbs"); //new
+        }, new HandlebarsTemplateEngine());
+
+        //get: show a form to update an artist
+        get("/artists/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("editArtist", true);
+            Artist artist = artistDao.findById(Integer.parseInt(req.params("id")));
+            model.put("artist", artist);
+            model.put("artists", artistDao.getAll());
+            return new ModelAndView(model, "artist-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //post: process a form to update an artist
+        post("/artists/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfArtistToEdit = Integer.parseInt(req.params("id"));
+            String newName = req.queryParams("newArtistName");
+            String newArtistImageUrl = req.queryParams("newArtistImageUrl");
+            artistDao.update(idOfArtistToEdit, newName, newArtistImageUrl);
+            res.redirect("/artists/" + idOfArtistToEdit);
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        //get: show new album form
+        get("/albums/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("artists", allArtists);
+            return new ModelAndView(model, "album-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //post: process new album form
+        post("/albums", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Artist> allArtists = artistDao.getAll();
+            model.put("allArtists", allArtists);
+            String name = req.queryParams("name");
+            String releaseDate = req.queryParams("releaseDate");
+            String tracks = req.queryParams("tracks");
+            String imageUrl = req.queryParams("imageUrl");
+            int artistId = Integer.parseInt(req.queryParams("artistId"));
+            Album newAlbum = new Album(name, releaseDate,tracks,imageUrl, artistId);
+            albumDao.add(newAlbum);
+            res.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
     }
 }
