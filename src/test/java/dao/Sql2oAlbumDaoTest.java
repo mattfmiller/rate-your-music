@@ -1,6 +1,7 @@
 package dao;
 
 import models.Album;
+import models.Artist;
 import models.Review;
 import org.junit.*;
 
@@ -62,6 +63,7 @@ public class Sql2oAlbumDaoTest {
         assertEquals(2, allAlbums.size());
     }
 
+
     @Test
     public void getAllReviewsByAlbumReturnsReviewsCorrectly() throws Exception{
         Album album = setupNewAlbum();
@@ -75,6 +77,14 @@ public class Sql2oAlbumDaoTest {
         assertFalse(albumDao.getAllReviewsByAlbum(albumId).contains(review2));
     }
 
+//    @Test
+//    public void getArtist_findsArtistByArtistId_artist() throws Exception{
+//        Album testAlbum = setupNewAlbum();
+//        albumDao.add(testAlbum);
+//        Artist foundArtist = albumDao.getArtist(testAlbum.getArtistId());
+//        assertEquals(testAlbum.getArtistId(), foundArtist.getId());
+//    }
+
 
     @Test
     public void findById_findsAlbumById_album() throws Exception{
@@ -84,19 +94,32 @@ public class Sql2oAlbumDaoTest {
         assertEquals(testAlbum.getId(), foundAlbum.getId());
     }
 
+//    @Test
+//    public void update_updatesAlbum_() {
+//        Album album = setupNewAlbum();
+//        albumDao.add(album);
+//        int id = album.getId();
+//        System.out.println(album.getTracks());
+//        albumDao.update(id, "Voices In The Dark2", "2018-05", "Gotta Get Away, Freak Out", "testUrl2", 2);
+//        Album updatedAlbum = albumDao.findById(id);
+//        List<String> expectedTracks = new ArrayList<>(Arrays.asList("Gotta Get Away, Freak Out".split(", ")));
+//        System.out.println(updatedAlbum.getTracks());
+//        assertEquals("Voices In The Dark2", updatedAlbum.getName());
+//        assertEquals("2018-05", updatedAlbum.getReleaseDate());
+////        assertEquals(expectedTracks, updatedAlbum.getTracks());
+//
+//    }
+
     @Test
     public void update_updatesAlbum_() {
         Album album = setupNewAlbum();
         albumDao.add(album);
         int id = album.getId();
-        System.out.println(album.getTracks());
         albumDao.update(id, "Voices In The Dark2", "2018-05", "Gotta Get Away, Freak Out", "testUrl2", 2);
         Album updatedAlbum = albumDao.findById(id);
-        List<String> expectedTracks = new ArrayList<>(Arrays.asList("Gotta Get Away, Freak Out".split(", ")));
-        System.out.println(updatedAlbum.getTracks());
         assertEquals("Voices In The Dark2", updatedAlbum.getName());
         assertEquals("2018-05", updatedAlbum.getReleaseDate());
-//        assertEquals(expectedTracks, updatedAlbum.getTracks());
+        assertEquals("Gotta Get Away, Freak Out", updatedAlbum.getTracks());
 
     }
 
@@ -109,7 +132,7 @@ public class Sql2oAlbumDaoTest {
         albumDao.deleteByArtistId(2);
         List<Album> allAlbums = albumDao.getAll();
         assertEquals(1, allAlbums.size());
-//        assertTrue(allAlbums.contains(album));
+        assertTrue(allAlbums.contains(album));
     }
 
     @Test

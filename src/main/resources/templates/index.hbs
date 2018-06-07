@@ -1,0 +1,14 @@
+{{#partial "content"}}
+
+    <h1>Recent Albums</h1>
+
+    {{#if albums}}
+        {{#each albums }}
+            <p><a href="/artists/{{artistId}}/albums/{{id}}">{{name}}</a></p>
+        {{/each}}
+    {{else}}
+        <p>No Albums!</p>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

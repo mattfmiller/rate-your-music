@@ -9,7 +9,8 @@ import java.util.Objects;
 public class Album {
     private String name;
     private String releaseDate;
-    private List<String> tracks;
+//    private List<String> tracks;
+    private String tracks;
     private String imageUrl;
     private int id;
     private int artistId;
@@ -17,7 +18,8 @@ public class Album {
     public Album(String name, String releaseDate, String tracks, String imageUrl, int artistId) {
         this.name = name;
         this.releaseDate = releaseDate;
-        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(", ")));
+//        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(", ")));
+        this.tracks = tracks;
         this.imageUrl = imageUrl;
         this.artistId = artistId;
     }
@@ -38,17 +40,24 @@ public class Album {
         this.releaseDate = releaseDate;
     }
 
-    public List<String> getTracks() {
+//    public List<String> getTracks() {
+//        return tracks;
+//    }
+
+    public String getTracks() {
         return tracks;
     }
 
-    public void setTracks(String tracks) {
-        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(", ")));
-    }
+//    public void setTracks(String tracks) {
+//        this.tracks = new ArrayList<>(Arrays.asList(tracks.split(", ")));
+//    }
 
-    public void addTrack(String track) {
-        this.tracks.add(track);
+    public void setTracks(String tracks) {
+        this.tracks = tracks;
     }
+//    public void addTrack(String track) {
+//        this.tracks.add(track);
+//    }
 
     public String getImageUrl() {
         return imageUrl;

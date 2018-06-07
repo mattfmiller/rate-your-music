@@ -1,6 +1,7 @@
 package dao;
 
 import models.Album;
+import models.Artist;
 import models.Review;
 
 import java.util.List;
@@ -9,6 +10,7 @@ public interface AlbumDao {
     // LIST
     List<Album> getAll();
     List<Review> getAllReviewsByAlbum(int albumId);
+//    Artist getArtist(int artistId);
 
     // CREATE
     void add(Album album);

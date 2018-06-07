@@ -1,6 +1,7 @@
 package dao;
 
 import models.Album;
+import models.Artist;
 import models.Review;
 import org.sql2o.*;
 
@@ -8,13 +9,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Sql2oAlbumDao  implements AlbumDao {
+public class Sql2oAlbumDao implements AlbumDao {
 
     private final Sql2o sql2o;
 
     public Sql2oAlbumDao(Sql2o sql2o){
         this.sql2o = sql2o;
     }
+
+
 
     @Override
     public void add(Album album) {
@@ -34,7 +37,7 @@ public class Sql2oAlbumDao  implements AlbumDao {
     @Override
     public List<Album> getAll() {
         try(Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM albums")
+            return con.createQuery("SELECT * FROM albums ORDER BY id DESC")
                     .executeAndFetch(Album.class);
         }
     }
@@ -47,6 +50,15 @@ public class Sql2oAlbumDao  implements AlbumDao {
                     .executeAndFetch(Review.class);
         }
     }
+
+//    @Override
+//    public Artist getArtist(int artistId) {
+//        try(Connection con = sql2o.open()){
+//            return con.createQuery("SELECT * FROM artists WHERE artistId = :artistId")
+//                    .addParameter("artistId", artistId)
+//                    .executeAndFetch(Artist.class);
+//        }
+//    }
 
     @Override
     public Album findById(int id) {
@@ -64,7 +76,8 @@ public class Sql2oAlbumDao  implements AlbumDao {
             con.createQuery(sql)
                     .addParameter("name", name)
                     .addParameter("releaseDate", releaseDate)
-                    .addParameter("tracks", new ArrayList<>(Arrays.asList(tracks.split(", "))))
+//                    .addParameter("tracks", new ArrayList<>(Arrays.asList(tracks.split(", "))))
+                    .addParameter("tracks", tracks)
                     .addParameter("imageUrl", imageUrl)
                     .addParameter("artistId", artistId)
                     .addParameter("id", id)

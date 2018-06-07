@@ -58,26 +58,39 @@ public class AlbumTest {
         assertEquals(expected, testAlbum.getReleaseDate());
     }
 
+//    @Test
+//    public void getTracks() {
+//        Album testAlbum = setUpNewAlbum();
+//        assertEquals(2, testAlbum.getTracks().size());
+//        assertEquals(true, testAlbum.getTracks().contains("Beach"));
+//    }
+//
+//    @Test
+//    public void setTracks() {
+//        Album testAlbum = setUpNewAlbum();
+//        testAlbum.setTracks("Ghost, Rifle, Freak Out");
+//        assertEquals(3, testAlbum.getTracks().size());
+//    }
+//
+//    @Test
+//    public void addTracks() {
+//        Album testAlbum = setUpNewAlbum();
+//        testAlbum.addTrack("Hey Little Girl");
+//        testAlbum.addTrack("Beach");
+//        assertEquals(4, testAlbum.getTracks().size());
+//    }
+
     @Test
     public void getTracks() {
         Album testAlbum = setUpNewAlbum();
-        assertEquals(2, testAlbum.getTracks().size());
-        assertEquals(true, testAlbum.getTracks().contains("Beach"));
+        assertEquals("Hey Little Girl, Beach", testAlbum.getTracks());
     }
 
     @Test
     public void setTracks() {
         Album testAlbum = setUpNewAlbum();
         testAlbum.setTracks("Ghost, Rifle, Freak Out");
-        assertEquals(3, testAlbum.getTracks().size());
-    }
-
-    @Test
-    public void addTracks() {
-        Album testAlbum = setUpNewAlbum();
-        testAlbum.addTrack("Hey Little Girl");
-        testAlbum.addTrack("Beach");
-        assertEquals(4, testAlbum.getTracks().size());
+        assertEquals("Ghost, Rifle, Freak Out", testAlbum.getTracks());
     }
 
     @Test
